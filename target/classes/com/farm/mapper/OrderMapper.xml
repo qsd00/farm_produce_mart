@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farm.mapper.OrderMapper">
+    <select id="list" resultType="Order">
+    select * from  order_  order by id asc
+  </select>
+    <select id="listByUser" resultType="Order">
+        select * from order_ where uid=#{arg0} and status!=#{arg1} order by id desc
+    </select>
+    <select id="listByStatus" resultType="Order">
+        select * from order_ where uid=#{arg0} and status=#{arg1} order by id desc
+    </select>
+    <insert id="add"  useGeneratedKeys="true" keyProperty="id" parameterType="Order" >
+    insert into order_ values (id,#{orderCode},#{uid},#{receiver},#{address},#{phone},#{status},#{createDate},#{payDate},#{deliveryDate},#{confirmDate})
+  </insert>
+    <delete id="delete">
+        delete from order_ where id= #{id}
+    </delete>
+    <select id="get" resultType="Order">
+      select * from order_ where id=#{id}
+    </select>
+    <update id="update"  parameterType="Order">
+    update order_  set uid=#{uid} ,orderCode=#{orderCode}, receiver=#{receiver},address=#{address}, phone=#{phone}, status=#{status}, createDate=#{createDate},payDate=#{payDate},deliveryDate=#{deliveryDate},confirmDate=#{confirmDate} where id=#{id}
+    </update>
+
+</mapper>

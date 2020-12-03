@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farm.mapper.PurchaseMapper">
+    <insert id="add"  useGeneratedKeys="true" keyProperty="id" parameterType="Purchase">
+        insert into purchase values(id,#{uid},#{fid},#{name},#{num},#{date},#{saddress},#{unit})
+    </insert>
+
+    <delete id="delete"  parameterType="Integer">
+        delete from purchase where id=#{id}
+    </delete>
+
+    <update id="update" parameterType="Purchase">
+        update purchase set uid=#{uid},fid=#{fid},name=#{name},num=#{num},date=#{date},saddress=#{saddress},unit=#{unit} where id=#{id}
+    </update>
+
+<select id="get"  resultType="Purchase">
+    select * from purchase where id=#{id}
+  </select>
+
+    <select id="list"  resultType="Purchase">
+        select * from purchase
+    </select>
+
+    <select id="listByFid"  resultType="Purchase">
+        select * from purchase where fid=#{fid}
+    </select>
+    <select id="listByUid"  resultType="Purchase">
+        select * from purchase where uid=#{uid}
+    </select>
+</mapper>

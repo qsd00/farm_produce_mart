@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farm.mapper.OutOrderMapper">
+    <select id="listAll" resultType="OutOrder">
+    select * from  out_order  order by id desc
+  </select>
+    <select id="list" resultType="OutOrder">
+    select * from  out_order  where sid=#{sid} order by id desc
+  </select>
+    <select id="listBySid" resultType="OutOrder">
+        select * from out_order where sid=#{arg0} and status=#{arg1} order by id desc
+    </select>
+    <insert id="add"  useGeneratedKeys="true" keyProperty="id" parameterType="OutOrder" >
+    insert into out_order values (id,#{orderCode},#{sid},#{uid},#{oid},#{status},#{createDate},#{deliveryDate},#{paidDate})
+  </insert>
+    <delete id="delete">
+        delete from out_order where id= #{id}
+    </delete>
+    <select id="get" resultType="OutOrder">
+      select * from out_order where id=#{id}
+    </select>
+    <select id="getByOid" resultType="OutOrder">
+      select * from out_order where oid=#{oid}
+    </select>
+    <update id="update"  parameterType="OutOrder">
+    update out_order  set uid=#{uid} ,sid=#{sid},oid=#{oid},orderCode=#{orderCode}, status=#{status}, createDate=#{createDate},deliveryDate=#{deliveryDate},paidDate=#{paidDate} where id=#{id}
+    </update>
+
+</mapper>

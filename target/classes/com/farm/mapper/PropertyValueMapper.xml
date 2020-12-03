@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farm.mapper.PropertyValueMapper">
+    <select id="list" resultMap="rm1">
+    select pv.*,pp.name  from   propertyvalue pv,property pp where pv.pdid=#{arg0} and pp.id= pv.pid order by id asc
+  </select>
+    <select id="listByPid" resultType="PropertyValue">
+      select pid,value from propertyvalue  where pid=#{pid} group by value
+    </select>
+    <select id="listByPdid" resultType="PropertyValue">
+      select * from propertyvalue  where pdid=#{pdid}
+    </select>
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="id" parameterType="PropertyValue" >
+    insert into propertyvalue values (id,#{pid},#{pdid},#{value})
+  </insert>
+
+    <select id="get" resultType="PropertyValue">
+      select * from propertyvalue where pid=#{arg0} and pdid=#{arg1}
+    </select>
+    <delete id="deleteByPdid">
+        delete from propertyvalue where pdid=#{pdid}
+    </delete>
+    <update id="update"  parameterType="PropertyValue">
+        update propertyvalue set value=#{value}  where id=#{id}
+    </update>
+
+    <resultMap id="rm1" type="PropertyValue">
+     <id column="id" property="id"></id>
+        <result column="pid" property="pid"></result>
+        <result column="pdid" property="pdid"></result>
+        <result column="value" property="value"></result>
+        <association property="property" javaType="Property">
+            <result column="name" property="name"></result>
+            <result column="cid" property="cid"></result>
+        </association>
+    </resultMap>
+
+</mapper>

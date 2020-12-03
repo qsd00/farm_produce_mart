@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farm.mapper.OrderItemMapper">
+    <select id="listByOid" resultType="OrderItem">
+    select * from  orderitem where oid=#{oid} order by id asc
+  </select>
+    <select id="listByOtid" resultType="OrderItem">
+    select * from  orderitem where otid=#{otid} order by id asc
+  </select>
+    <select id="listByUid" resultType="OrderItem">
+    select * from   orderitem where uid=#{uid} and oid is null order by id asc
+  </select>
+    <select id="listBySidAndOid" resultType="OrderItem">
+    select * from   orderitem where sid=#{arg0} and oid=#{arg1} order by id asc
+  </select>
+    <select id="listByPdid" resultType="OrderItem">
+     select * from   orderitem where pdid=#{pdid} and otid is not null order by id asc
+  </select>
+    <select id="listByPdids"  resultType="OrderItem">
+     select pdid,sum(number) from orderitem where otid is not null and
+     <foreach collection="array" item="id"  open="pdid in("  close=")" separator=",">
+         #{id}
+     </foreach>
+    group by pdid order by sum(number) desc limit 5
+  </select>
+    <insert id="add"  useGeneratedKeys="true" keyProperty="id" parameterType="OrderItem" >
+    insert into orderitem values (id,#{pdid},#{oid},#{otid},#{sid},#{uid},#{number})
+  </insert>
+    <delete id="delete">
+        delete from orderitem where id= #{id}
+    </delete>
+    <select id="get" resultType="OrderItem">
+      select * from orderitem where id=#{id}
+    </select>
+    <update id="update"  parameterType="OrderItem">
+        update orderitem set pdid=#{pdid} , oid=#{oid},otid=#{otid},sid=#{sid},uid=#{uid},number=#{number} where id=#{id}
+    </update>
+
+</mapper>
